@@ -22,7 +22,7 @@ interface Customer {
 export default class CustomerRepository {
   
 
-  getCustomer(): Customer[]{
+  getCustomers(): Customer[]{
     return customers;
   }
 

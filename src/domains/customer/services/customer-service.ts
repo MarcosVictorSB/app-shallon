@@ -4,8 +4,8 @@ const repository = new CustomerRepository()
 
 export default class CustomerService {
     
-    getCustomer(){
-        return repository.getCustomer()
+    getCustomers(){
+        return repository.getCustomers()
     }
 
     create(name: string) {        
