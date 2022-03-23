@@ -6,8 +6,9 @@ const customerRouter = Router();
 
 const controller = new CustomerController()
 
-customerRouter.get('/api/v1/customers/', controller.getCustomer);
-customerRouter.post('/api/v1/customers/', controller.create)
+customerRouter
+  .get('/api/v1/customers/', controller.getCustomers)
+  .post('/api/v1/customers/', controller.create)
 
 
 export default customerRouter;
