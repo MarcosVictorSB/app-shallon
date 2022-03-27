@@ -1,14 +1,16 @@
 import CustomerRepository from "../repository/customer-repository"
+import { CustomerCreate } from "../types"
 
 const repository = new CustomerRepository()
 
+
 export default class CustomerService {
-    
-    getCustomers(){
-        return repository.getCustomers()
+
+    async getCustomers(): Promise<any>{
+        return await repository.getCustomers();
     }
 
-    create(name: string) {        
-        return repository.create(name)
+    create(customer: CustomerCreate) {
+        return repository.create(customer);      
     }
 }
