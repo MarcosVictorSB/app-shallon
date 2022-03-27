@@ -1,38 +1,21 @@
-const customers =  [
-    {
-        id: 1,
-        name: 'Customer 1'
-    },
-    {
-        id: 2,
-        name: 'Customer 2'
-    },
-    {
-        id: 3,
-        name: 'Customer 3'
-    }
-]
+import db from '../../../models';
+import { customError } from '../../../helpers/custom-error';
+import { CustomerCreate } from '../types';
+const Customer = 'Customer';
 
-interface Customer {
-    id: number;
-    name: string
+type CustomerRepositoryResult = {
+    id: number,
+    name: string,
+    createdAt: Date,
+    updatedAt: Date
 }
 
-
 export default class CustomerRepository {
-  
-
-  getCustomers(): Customer[]{
-    return customers;
-  }
-
-  create(name: string): Customer[]{
-    const id = customers.length;
-    const newCustomer = {
-        id: id,
-        name: name
+    async getCustomers(): Promise<CustomerRepositoryResult>{
+        return await db.Customer.findAll();      
     }
-    customers.push(newCustomer);
-    return customers
-  }
+
+    async create(customer: CustomerCreate): Promise<any>{
+        return await db.Customer.create(customer);       
+    }
 }
