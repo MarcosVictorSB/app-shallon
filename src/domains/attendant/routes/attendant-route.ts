@@ -1,5 +1,5 @@
 import { Router } from "express";
-import AttendantController from '../controllers';
+import AttendantController from '../controllers/attendant-controller';
 
 const attendantRouter = Router();
 
