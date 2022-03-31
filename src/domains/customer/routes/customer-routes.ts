@@ -7,8 +7,10 @@ const customerRouter = Router();
 const controller = new CustomerController()
 
 customerRouter
-  .get('/api/v1/customers/', controller.getCustomers)
-  .post('/api/v1/customers/', controller.create)
+  .post('/login', controller.login)
+  .post('/', controller.create)
+  .get('/', controller.getCustomers)
+  
 
 
 export default customerRouter;
