@@ -18,4 +18,8 @@ export default class CustomerRepository {
     async create(customer: CustomerCreate): Promise<any>{
         return await db.Customer.create(customer);       
     }
+
+    async getCustomerByEmail(email: string): Promise<any> {
+        return await  await db.Customer.findOne({ where: { email: email } });
+    }
 }
