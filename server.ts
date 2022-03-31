@@ -10,8 +10,8 @@ const port = 3000 || process.env.PORT;
 app.use(express.json());
 
 //routes
-app.use(routes.customerRouter)
-app.use(routes.attendantRouter)
+app.use('/api/v1/customer', routes.customerRouter)
+//app.use(routes.attendantRouter)
 
 
 app.listen(port, () => {
