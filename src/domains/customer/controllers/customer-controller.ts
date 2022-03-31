@@ -4,9 +4,10 @@ import { CustomerEnumHelper } from "../../../helpers/enum-helper";
 import { HttpStatusCode, HttpResponse } from "../../../protocols/";
 import CustomerService from "../services/customer-service";
 import { customerSchema } from "../validator";
-
+import { createHash, compareHash } from '../../../hash'
 
 const service = new CustomerService()
+
 
 export default class CustomerController {
 
@@ -31,12 +32,14 @@ export default class CustomerController {
                 password
             }
             const schema = customerSchema.validate(newCustomer);
+            if (schema.error) return response.status(HttpStatusCode.BAD_REQUEST).json(schema.error.details)
             
             const customer = await service.getCustomerByEmail(newCustomer.email);
             if(customer) return response.status(HttpStatusCode.CONFLICT).json({ message: CustomerEnumHelper.EMAIL_ALREADY_REGISTERED })
 
+            const hash = createHash(newCustomer.password);
+            newCustomer.password = hash;
             
-            if (schema.error) return response.status(HttpStatusCode.BAD_REQUEST).json(schema.error.details)
 
             const customerCreated = await service.create(newCustomer);
             return response.status(HttpStatusCode.CREATED).json({ customerCreated }) 
@@ -52,7 +55,8 @@ export default class CustomerController {
             
             if(!customer) return response.status(HttpStatusCode.NOT_FOUND).json({ message: CustomerEnumHelper.NOT_FOUND_USER })
             
-            if(customer.password !== password) return response.status(HttpStatusCode.FORBIDDEN).json({ message: CustomerEnumHelper.WRONG_CRENDENTIAL })
+            const isValid = compareHash(password, customer.password);
+            if(!isValid) return response.status(HttpStatusCode.FORBIDDEN).json({ message: CustomerEnumHelper.WRONG_CRENDENTIAL })
 
             return response.status(HttpStatusCode.OK).json({ message: customer})
             
@@ -60,4 +64,6 @@ export default class CustomerController {
             return response.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({ message: error })
         }
     }
+
+    
 }
