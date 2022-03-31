@@ -45,10 +45,19 @@ export default class CustomerController {
         }
     }
 
-            const newCustomer = await service.create(customer);
-            return response.status(HttpStatusCode.CREATED).json({ newCustomer }) 
+    async login(request:Request, response): Promise<any> {
+        try {
+            const { email, password } = request.body;
+            const customer = await service.getCustomerByEmail(email);
+            
+            if(!customer) return response.status(HttpStatusCode.NOT_FOUND).json({ message: CustomerEnumHelper.NOT_FOUND_USER })
+            
+            if(customer.password !== password) return response.status(HttpStatusCode.FORBIDDEN).json({ message: CustomerEnumHelper.WRONG_CRENDENTIAL })
+
+            return response.status(HttpStatusCode.OK).json({ message: customer})
+            
         } catch (error) {
-            return response.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({message: error})     
+            return response.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({ message: error })
         }
     }
 }
