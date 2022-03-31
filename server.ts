@@ -11,7 +11,6 @@ app.use(express.json());
 
 //routes
 app.use('/api/v1/customer', routes.customerRouter)
-//app.use(routes.attendantRouter)
 
 
 app.listen(port, () => {
