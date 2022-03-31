@@ -10,7 +10,12 @@ export default class CustomerService {
         return await repository.getCustomers();
     }
 
-    create(customer: CustomerCreate) {
-        return repository.create(customer);      
+    async create(customer: CustomerCreate) {
+        return await repository.create(customer);      
     }
+
+    async getCustomerByEmail(email: string): Promise<any> {
+        return await repository.getCustomerByEmail(email);
+    }
+
 }
