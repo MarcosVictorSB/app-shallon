@@ -8,7 +8,10 @@
   },
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules server.ts",
-    "test": "jest"
+    "test": "jest",
+    "seed:all": "npx sequelize-cli db:seed:all",
+    "seed:create": "npx sequelize-cli seed:generate --name",
+    "model:create": "npx sequelize-cli model:generate --name"
   },
   "repository": {
     "type": "git",
